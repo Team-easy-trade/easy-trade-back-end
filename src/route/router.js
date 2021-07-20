@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {signup, signin, getAll, verifyOne, getOne, updateOne, updatePassword, deleteOne} = require('./userRouteHandler.js');
+const {signup, signin, getAll, getOne, updateOne, updatePassword, deleteOne} = require('./userRouteHandler.js');
 
 const basicAuth = require('../middleware/basicAuth');
 const bearerAuth = require('../middleware/bearerAuth.js');
@@ -22,12 +22,8 @@ router.post('/signup', roleValidation, dataValidation, signup);
 // admin signup, admin can be only added by another admin.
 router.post('/adminsignup', bearerAuth, adminValidation, dataValidation, signup); 
 
-// microservice signup, services can be only added by admin.
-router.post('/servicesignup', bearerAuth, adminValidation, dataValidation, signup);
-
 router.post('/signin', basicAuth, signin);
 
-router.post('/verify', verifyOne);
 
 router.get('/allusers', bearerAuth, adminValidation, getAll);
 

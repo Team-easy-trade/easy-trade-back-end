@@ -18,9 +18,9 @@ app.use('/api/v1',router);
 
 
 // routes error handlers
-const fourOfour = require('./middleware/404');
+const fourOfour = require('./middleware/fourOfour.js');
 app.use('*', fourOfour);
-const svrErrors = require('./middleware/error');
+const svrErrors = require('./middleware/fiveHundred.js');
 app.use(svrErrors);
 
 
