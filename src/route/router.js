@@ -14,7 +14,7 @@ const userValidation = require('../middleware/userValidation.js');
 
 
 
-// User routes definitions
+// User routes definations
 
 // regular user can ONLY sign up as a user;
 router.post('/signup', roleValidation, dataValidation, signup);
@@ -34,5 +34,11 @@ router.patch('/user/:id', bearerAuth, userValidation, updateOne);
 router.patch('/user/:id/password', bearerAuth, userValidation, updatePassword);
 
 router.delete('/user/:id', bearerAuth, userValidation, deleteOne);
+
+
+// listings routes definations
+// ToDo: think about how to creates URLs, and what middle ware you need to use, and how to design handlers
+
+
 
 module.exports = router;

@@ -3,7 +3,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const server = require('./src/server.js');
 
-
+// config mongoDB and connect to it.
 const MONGODB_URI = process.env.MONGODB_URI;
 const mongooseOptions = {
   useNewUrlParser: true,
@@ -21,4 +21,5 @@ async function connectDB () {
 } 
 connectDB();
 
+// start our express server
 server.start();

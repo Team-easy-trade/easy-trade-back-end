@@ -20,14 +20,25 @@ const user = new mongoose.Schema({
     minlength: 5,
   },
   email: {
-    type: String, 
+    type: String,
+    required: true, 
     validate: [ isEmail, 'invalid email' ],
+  },
+  phone: {
+    type: Number,
+    required: true,
+    // validate: [ ]
   },
   role: { 
     type: String, 
-    required: true, 
+    // required: true, 
     default: 'user', 
-    enum: ['admin', 'user']},
+    enum: ['admin', 'user'],
+  },
+  location: {
+    type: String,
+    required: true,
+  },
 });
 
 // before sve the user to DB, hash the password
