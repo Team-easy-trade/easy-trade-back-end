@@ -70,7 +70,7 @@ user.statics.basicValidation = async function(username, password) {
 };
 
 /**
- * 
+ * function to generate a token for a specific user
  * @returns {String} a signed token
  */
 user.methods.tokenGenerator = function () {
@@ -82,23 +82,13 @@ user.methods.tokenGenerator = function () {
   return jwt.sign(token, SECRET);
 };
 
-/**
- * find one user from DB, if no user found, returns null
- * @param {String} username 
- * @returns a user object or null
- */
-user.methods.validation = function(username) {
-  const query = { username };
-  return this.findOne(query);
-};
-
 
 /**
  * 
  * @param {String} token 
- * @returns A user object or null
+ * @returns A user object or null, or throw exception is token is invalid
  */
-user.statics.authenticateToken = function (token) {
+user.statics.findUserByToken = function (token) {
 
   try {
     const parsedToken = jwt.verify(token, SECRET);

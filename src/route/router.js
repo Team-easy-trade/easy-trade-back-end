@@ -3,10 +3,10 @@
 const express = require('express');
 const router = express.Router();
 
-const {signup, signin, getAll, getOne, updateOne, updatePassword, deleteOne} = require('./userRouteHandler.js');
+const {signup, signin, getAll, getOne, updateOne, updatePassword, deleteOne} = require('./handlers/userHandlers.js');
 
-const basicAuth = require('../middleware/basicAuth');
-const bearerAuth = require('../middleware/bearerAuth.js');
+const basicAuth = require('../middleware/auth/basic.js');
+const bearerAuth = require('../middleware/auth/bearer.js');
 const roleValidation = require('../middleware/roleValidation.js');
 const adminValidation = require('../middleware/adminValidation.js');
 const dataValidation = require('../middleware/dataValidation.js');

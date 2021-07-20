@@ -15,7 +15,7 @@ async function signup (req, res, next){
         const token = savedUser.tokenGenerator();
         delete savedUser.password;
         res.status(200).send({
-          ...savedUser,
+          user:savedUser,
           token,
         });
       } catch (error) {
@@ -35,46 +35,14 @@ async function signup (req, res, next){
 
 
 async function signin (req, res, next){
+  req.user.password = undefined;
 
-  const user = {
-    id: req.user._id,
-    username: req.user.username,
-    role: req.user.role,
-    location: req.user.location,
-    
-  };
   res.send({
     token: req.token,
-    user,
+    user: req.user,
   });
 }
 
-
-async function verifyOne (req, res, next){
-  const authenticationErr = {message_spec: 'User can NOT be authenticated. Please login again.', statusCode: 401, statusMessage:'Unauthenticated'};
-
-  const token = req.headers.authorization.split(' ').pop();
-
-  let validUser;
-  try{
-    validUser = await userModel.authenticateToken(token);
-  }
-  catch (err){
-    next(authenticationErr);
-    return;
-  }
-
-  if (validUser) {
-    const user = {
-      username: validUser.username,
-      id: validUser._id,
-      role: validUser.role,
-    };
-    res.status(200).send(user);
-  } else {
-    next(authenticationErr);
-  }
-}
 
 
 function handlerGenerator (method){
@@ -100,15 +68,11 @@ function handlerGenerator (method){
           break;
 
         case 'updateOne':{
-
           const existingUserInfo = await userModel.findById(id);
-
           Object.keys(req.body).forEach(key => {
             existingUserInfo[key]=req.body[key];
           });
-
           result = await existingUserInfo.save();
-
           break;
         }
 
@@ -143,4 +107,4 @@ const updatePassword = handlerGenerator('updatePassword');
 const deleteOne = handlerGenerator('delete');
 
 
-module.exports = {signup, signin, verifyOne, getAll, getOne, updateOne, updatePassword, deleteOne};
+module.exports = {signup, signin, getAll, getOne, updateOne, updatePassword, deleteOne};
