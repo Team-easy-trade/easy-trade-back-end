@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const {signup, signin, getAll, getOne, updateOne, updatePassword, deleteOne} = require('./handlers/userHandlers.js');
-
+const {getAllListings, postListing} = require('./handlers/listingHandlers');
 const basicAuth = require('../middleware/auth/basic.js');
 const bearerAuth = require('../middleware/auth/bearer.js');
 const roleValidation = require('../middleware/roleValidation.js');
@@ -39,6 +39,10 @@ router.delete('/user/:id', bearerAuth, userValidation, deleteOne);
 // listings routes definations
 // ToDo: think about how to creates URLs, and what middle ware you need to use, and how to design handlers
 
-
+//pass in middleware "bearerAuth" --this is to make sure to authorize the user...this ultimately allows them to edit/delete/post their own content, userValidation
+//we should only allow one user to modify their own stuff
+//do this in listing validation
+router.get('/alllistings', getAllListings);
+router.post('/postlisting', postListing)
 
 module.exports = router;
