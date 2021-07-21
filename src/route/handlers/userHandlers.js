@@ -8,8 +8,8 @@ async function signup (req, res, next){
   
   try {
     const user = new userModel(req.body);
-    const valid = await userModel.findOne({username: user.username});
-    if(!valid){
+    const isTaken = await userModel.findOne({username: user.username});
+    if(!isTaken){
       try{
         const savedUser = await user.save();
         const token = savedUser.tokenGenerator();
@@ -22,12 +22,12 @@ async function signup (req, res, next){
         next(error);
       }
     } 
-    // not valid meas username already exsit
+    // not valid means username already exsit
     else {
       next(uniqueError);
     }
   }
-  // if anything goes wrong of the connection between server and DB server
+  // if anything goes wrong of the connection between server and DB server, or invalid data etc.
   catch (err){
     next(err);
   }
