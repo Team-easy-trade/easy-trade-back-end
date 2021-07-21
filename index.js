@@ -19,7 +19,8 @@ async function connectDB () {
   } catch (error){
     console.log('**** DB connection error',error);
   }
-} 
+}
+
 connectDB();
 
 // start our express server

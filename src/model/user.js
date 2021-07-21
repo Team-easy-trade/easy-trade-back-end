@@ -41,7 +41,7 @@ const user = new mongoose.Schema({
   },
 });
 
-// before sve the user to DB, hash the password
+// before save the user to DB, hash the password
 user.pre('save', async function(){
   if (this.isModified('password')){
     this.password = await bcrypt.hash(this.password, 5);
@@ -91,9 +91,9 @@ user.methods.tokenGenerator = function () {
 user.statics.findUserByToken = function (token) {
 
   try {
-    const parsedToken = jwt.verify(token, SECRET);
+    const userFromToken = jwt.verify(token, SECRET);
 
-    return this.findById(parsedToken.id);
+    return this.findById(userFromToken.id);
   } catch (e) { throw new Error('Invalid Token'); }
 
 };
