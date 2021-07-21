@@ -27,6 +27,10 @@ name: {
   image: {
       type:String,
       required:true
+  },
+  owner: {
+      type:String,
+      required:true
   }
 
 });
