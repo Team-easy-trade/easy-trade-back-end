@@ -8,14 +8,14 @@ async function getAllListings(req, res, next) {
   //   next(error);
   // }
 
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 12 } = req.query;
   try{
-     const records = await req.model.find()
+     const records = await listingModel.find()
     .limit(limit * 1)
     .skip((page - 1) * limit)
     .exec();
   
-    const pageCount = await req.model.countDocuments();
+    const pageCount = await listingModel.countDocuments();
   
     res.json({
       records,

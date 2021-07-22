@@ -2,9 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const modelFinder = require('../middleware/modelFinder.js');
 
-router.param('model', modelFinder);
 const {signup, signin, getAll, getOne, updateOne, updatePassword, deleteOne} = require('./handlers/userHandlers.js');
 const {getAllListings, postListing, deleteListing, editListing, getAllListingsByUserId, getAllListingsByCategory } = require('./handlers/listingHandlers');
 const basicAuth = require('../middleware/auth/basic.js');
@@ -44,7 +42,7 @@ router.delete('/user/:id', bearerAuth, userValidation, deleteOne);
 //pass in middleware "bearerAuth" --this is to make sure to authorize the user...this ultimately allows them to edit/delete/post their own content, userValidation
 //we should only allow one user to modify their own stuff
 //do this in listing validation
-router.get('/listing/model/:model', getAllListings);
+router.get('/listings', getAllListings);
 router.post('/listing', bearerAuth, userValidation, postListing)
 router.delete('/listing/:id', bearerAuth, userValidation, deleteListing)
 router.patch('/listing/:id', bearerAuth, userValidation, editListing)
