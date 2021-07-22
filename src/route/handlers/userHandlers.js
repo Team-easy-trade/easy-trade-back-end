@@ -47,6 +47,7 @@ async function signin (req, res, next){
 
 function handlerGenerator (method){
   return async (req, res, next)=>{
+    console.log(req)
     const id = req.params.id ? {_id:req.params.id } : {};
 
     try{
