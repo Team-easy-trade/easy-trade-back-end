@@ -1,12 +1,30 @@
 const listingModel = require("../../model/listing.js");
-
 async function getAllListings(req, res, next) {
-  try {
-    const listingList = await listingModel.find({});
-    res.status(200).json(listingList);
-  } catch (error) {
-    next(error);
+  // try {
+  //   const listingList = await listingModel.find({});
+  //   res.status(200).json(listingList);
+  // } catch (error) {
+  //   next(error);
+  // }
+
+  const { page = 1, limit = 12 } = req.query;
+  try{
+     const records = await listingModel.find()
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .exec();
+  
+    const pageCount = await listingModel.countDocuments();
+  
+    res.json({
+      records,
+      totalPages: Math.ceil(pageCount / limit),
+      currentPage: page
+    })}
+  catch(error){
+    next(error)
   }
+ 
 }
 
 //needs middleware
@@ -67,6 +85,20 @@ async function getAllListingsByCategory(req, res, next) {
   }
 }
 
+async function searchListingsByDescription(req,res,next){
+
+//what are we trying to do
+//we want to look at all the documents and see which ones have fields that contain the keyword
+//first we will find all of the documents, and then we will filter them out based off if their fields contain the word
+//   const parseField = '/' + req.body.keyword + '/';
+ 
+//   try{
+//  const query = await listingModel.find()
+//   }catch(error){
+//     next(error)
+//   }
+
+}
 module.exports = {
   getAllListings,
   postListing,
@@ -74,4 +106,5 @@ module.exports = {
   editListing,
   getAllListingsByUserId,
   getAllListingsByCategory,
+  searchListingsByDescription
 };

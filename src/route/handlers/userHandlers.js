@@ -65,7 +65,10 @@ function handlerGenerator (method){
         }
 
         case 'findOne':
-          result = await userModel.findById(id);
+         const user = await userModel.findById(id);
+         user.password = undefined;
+         user.role = undefined;
+         result = user;
           break;
 
         case 'updateOne':{
