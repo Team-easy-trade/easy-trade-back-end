@@ -39,11 +39,11 @@ router.delete('/user/:id', bearerAuth, userValidation, deleteOne);
 // listings routes definations
 
 router.get('/listings', getAllListings);
-router.post('/listing', bearerAuth, userValidation, postListing)
-router.delete('/listing/:id', bearerAuth, userValidation, deleteListing)
-router.patch('/listing/:id', bearerAuth, userValidation, editListing)
-router.get('/listings/id/:id', getAllListingsByUserId)
-router.get('/listings/category/:category', getAllListingsByCategory)
-router.get('/listing',searchListingsByDescription)
+router.post('/listing', bearerAuth, userValidation, postListing);
+router.delete('/listing/:id', bearerAuth, userValidation, deleteListing);
+router.patch('/listing/:id', bearerAuth, userValidation, editListing);
+router.get('/listings/id/:id', getAllListingsByUserId);
+router.get('/listings/category/:category', getAllListingsByCategory);
+router.get('/listing',searchListingsByDescription);
 
 module.exports = router;
