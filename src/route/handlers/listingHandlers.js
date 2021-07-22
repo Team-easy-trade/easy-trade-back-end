@@ -1,12 +1,31 @@
 const listingModel = require("../../model/listing.js");
 
 async function getAllListings(req, res, next) {
-  try {
-    const listingList = await listingModel.find({});
-    res.status(200).json(listingList);
-  } catch (error) {
-    next(error);
+  // try {
+  //   const listingList = await listingModel.find({});
+  //   res.status(200).json(listingList);
+  // } catch (error) {
+  //   next(error);
+  // }
+
+  const { page = 1, limit = 10 } = req.query;
+  try{
+     const records = await req.model.find()
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .exec();
+  
+    const pageCount = await req.model.countDocuments();
+  
+    res.json({
+      records,
+      totalPages: Math.ceil(pageCount / limit),
+      currentPage: page
+    })}
+  catch(error){
+    next(error)
   }
+ 
 }
 
 //needs middleware
