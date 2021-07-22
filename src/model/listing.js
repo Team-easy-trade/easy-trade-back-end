@@ -7,20 +7,17 @@ const listing = new mongoose.Schema({
     type: String, 
     required: true, 
     unique: true,
-    maxlength: 20,
   },
   price: {
     type: Number,
     required: true,
-
   },
   description:{
     type:String,
     required: true,
-    maxLength: 140,
   },
   category: {
-    type:String,
+    type:`String`,
     required:true,
     maxLength: 20,
   },
