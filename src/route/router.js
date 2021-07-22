@@ -29,7 +29,7 @@ router.post('/signin', basicAuth, signin);
 
 router.get('/allusers', bearerAuth, adminValidation, getAll);
 
-router.get('/user/:id', bearerAuth, userValidation, getOne);
+router.get('/user/:id', bearerAuth,  getOne);
 
 router.patch('/user/:id', bearerAuth, userValidation, updateOne);
 
