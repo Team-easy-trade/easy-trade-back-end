@@ -1,5 +1,4 @@
 const listingModel = require("../../model/listing.js");
-
 async function getAllListings(req, res, next) {
   // try {
   //   const listingList = await listingModel.find({});
@@ -86,6 +85,20 @@ async function getAllListingsByCategory(req, res, next) {
   }
 }
 
+async function searchListingsByDescription(req,res,next){
+
+//what are we trying to do
+//we want to look at all the documents and see which ones have fields that contain the keyword
+//first we will find all of the documents, and then we will filter them out based off if their fields contain the word
+//   const parseField = '/' + req.body.keyword + '/';
+ 
+//   try{
+//  const query = await listingModel.find()
+//   }catch(error){
+//     next(error)
+//   }
+
+}
 module.exports = {
   getAllListings,
   postListing,
@@ -93,4 +106,5 @@ module.exports = {
   editListing,
   getAllListingsByUserId,
   getAllListingsByCategory,
+  searchListingsByDescription
 };
