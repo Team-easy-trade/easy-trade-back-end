@@ -58,9 +58,9 @@ async function getAllListingsByUserId(req, res, next) {
 
 //get all listings under the same category
 async function getAllListingsByCategory(req, res, next) {
-  const id = req.params.category;
+  const category = req.params.category;
   try {
-    const listingList = await listingModel.find({ owner: id });
+    const listingList = await listingModel.find({ category });
     res.status(200).json(listingList);
   } catch (error) {
     next(error);
