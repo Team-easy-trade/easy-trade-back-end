@@ -47,7 +47,7 @@ async function signin (req, res, next){
 
 function handlerGenerator (method){
   return async (req, res, next)=>{
-    console.log(req)
+    console.log(req);
     const id = req.params.id ? {_id:req.params.id } : {};
 
     try{
@@ -64,12 +64,13 @@ function handlerGenerator (method){
           break;
         }
 
-        case 'findOne':
-         const user = await userModel.findById(id);
-         user.password = undefined;
-         user.role = undefined;
-         result = user;
+        case 'findOne':{
+          const user = await userModel.findById(id);
+          user.password = undefined;
+          user.role = undefined;
+          result = user;
           break;
+        }
 
         case 'updateOne':{
           const existingUserInfo = await userModel.findById(id);

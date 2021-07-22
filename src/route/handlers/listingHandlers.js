@@ -1,28 +1,23 @@
-const listingModel = require("../../model/listing.js");
+const listingModel = require('../../model/listing.js');
 async function getAllListings(req, res, next) {
-  // try {
-  //   const listingList = await listingModel.find({});
-  //   res.status(200).json(listingList);
-  // } catch (error) {
-  //   next(error);
-  // }
 
   const { page = 1, limit = 12 } = req.query;
   try{
-     const records = await listingModel.find()
-    .limit(limit * 1)
-    .skip((page - 1) * limit)
-    .exec();
+    const records = await listingModel.find()
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
   
     const pageCount = await listingModel.countDocuments();
   
     res.json({
       records,
       totalPages: Math.ceil(pageCount / limit),
-      currentPage: page
-    })}
+      currentPage: page,
+    });
+  }
   catch(error){
-    next(error)
+    next(error);
   }
  
 }
@@ -31,8 +26,8 @@ async function getAllListings(req, res, next) {
 async function postListing(req, res, next) {
   try {
     const listing = new listingModel(req.body);
-    const savedListing = await listing.save();
-    res.status(200).send("status ok, listing saved.");
+    await listing.save();
+    res.status(200).send('status ok, listing saved.');
   } catch (error) {
     next(error);
   }
@@ -42,8 +37,8 @@ async function postListing(req, res, next) {
 async function deleteListing(req, res, next) {
   const id = req.params.id;
   try {
-    result = await listingModel.findByIdAndDelete(id);
-    res.status(200).send("Deleted");
+    await listingModel.findByIdAndDelete(id);
+    res.status(200).send('Deleted');
   } catch (error) {
     next(error);
   }
@@ -56,8 +51,8 @@ async function editListing(req, res, next) {
     Object.keys(req.body).forEach((key) => {
       existingListingInfo[key] = req.body[key];
     });
-    result = await existingListingInfo.save();
-    res.status(200).json(result);
+    await existingListingInfo.save();
+    res.status(200).send('record updated');
   } catch (error) {
     next(error);
   }
@@ -65,11 +60,24 @@ async function editListing(req, res, next) {
 
 //get all usernames
 async function getAllListingsByUserId(req, res, next) {
+  
   const id = req.params.id;
-  try {
-    const listingList = await listingModel.find({ owner: id });
-    res.status(200).json(listingList);
-  } catch (error) {
+  const { page = 1, limit = 12 } = req.query;
+  try{
+    const records = await listingModel.find({ owner: id })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+  
+    const pageCount = await listingModel.countDocuments();
+  
+    res.json({
+      records,
+      totalPages: Math.ceil(pageCount / limit),
+      currentPage: page,
+    });
+  }
+  catch(error){
     next(error);
   }
 }
@@ -77,26 +85,38 @@ async function getAllListingsByUserId(req, res, next) {
 //get all listings under the same category
 async function getAllListingsByCategory(req, res, next) {
   const category = req.params.category;
-  try {
-    const listingList = await listingModel.find({ category });
-    res.status(200).json(listingList);
-  } catch (error) {
+  const { page = 1, limit = 12 } = req.query;
+  try{
+    const records = await listingModel.find({ category })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+  
+    const pageCount = await listingModel.countDocuments();
+  
+    res.json({
+      records,
+      totalPages: Math.ceil(pageCount / limit),
+      currentPage: page,
+    });
+  }
+  catch(error){
     next(error);
   }
 }
 
 async function searchListingsByDescription(req,res,next){
 
-//what are we trying to do
-//we want to look at all the documents and see which ones have fields that contain the keyword
-//first we will find all of the documents, and then we will filter them out based off if their fields contain the word
-//   const parseField = '/' + req.body.keyword + '/';
+  //what are we trying to do
+  //we want to look at all the documents and see which ones have fields that contain the keyword
+  //first we will find all of the documents, and then we will filter them out based off if their fields contain the word
+  //   const parseField = '/' + req.body.keyword + '/';
  
-//   try{
-//  const query = await listingModel.find()
-//   }catch(error){
-//     next(error)
-//   }
+  //   try{
+  //  const query = await listingModel.find()
+  //   }catch(error){
+  //     next(error)
+  //   }
 
 }
 module.exports = {
@@ -106,5 +126,5 @@ module.exports = {
   editListing,
   getAllListingsByUserId,
   getAllListingsByCategory,
-  searchListingsByDescription
+  searchListingsByDescription,
 };
