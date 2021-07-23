@@ -69,7 +69,7 @@ async function getAllListingsByUserId(req, res, next) {
       .skip((page - 1) * limit)
       .exec();
   
-    const pageCount = await listingModel.countDocuments();
+    const pageCount = await listingModel.countDocuments({ owner: id });
   
     res.json({
       records,
@@ -92,7 +92,7 @@ async function getAllListingsByCategory(req, res, next) {
       .skip((page - 1) * limit)
       .exec();
   
-    const pageCount = await listingModel.countDocuments();
+    const pageCount = await listingModel.countDocuments({ category });
   
     res.json({
       records,
