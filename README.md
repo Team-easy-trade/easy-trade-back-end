@@ -2,6 +2,10 @@
 
 This is the mini project required by TLG training.
 
+Deployed URL:
+
+<https://easy-trade-backend.herokuapp.com/api/v1>
+
 ## Team members
 
 Peng Chen
